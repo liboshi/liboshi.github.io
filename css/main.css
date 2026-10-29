@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Boush Li — Facebook-inspired design system
+   Boush Li — site design system
    Tokens and component rules: docs/design-system.md
    ========================================================================== */
 
@@ -67,7 +67,7 @@
   color-scheme: light;
 }
 
-/* Facebook-style dark mode: follows the system unless the user picked a theme. */
+/* Dark mode: follows the system unless the user picked a theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-bg: #18191a;

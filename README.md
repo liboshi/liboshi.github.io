@@ -1,16 +1,20 @@
 # liboshi.github.io
 
-Boush Li 的个人主页与技术博客，基于 [Jekyll](https://jekyllrb.com/) 的静态站点，由 GitHub Pages 构建发布：<https://liboshi.github.io>。
+Boush Li 的个人主页与技术博客，基于 [Jekyll](https://jekyllrb.com/) 构建的静态站点，由 GitHub Pages 发布：<https://liboshi.github.io>。
 
-首页展示最新文章，`/posts/` 归档全部文章（按年份分组），`/about/` 介绍作者。站点为 Facebook 蓝色风格，支持深色模式切换。
+- 首页：个人资料卡 + 最新文章信息流，每篇文章显示摘要、标签与阅读入口
+- `/posts/`：按年份分组的文章归档
+- `/about/`：关于作者
+- `/feed.xml`：Atom 订阅源
+- 浅色 / 深色双主题，跟随系统并可手动切换；桌面、平板、手机均适配
 
 ## 技术栈
 
-- Jekyll 3.9 + Liquid 模板，构建为纯静态 HTML
+- Jekyll 3.9 + Liquid 模板，输出纯静态 HTML，无运行时框架
 - Markdown：kramdown（GFM 输入）+ Rouge 代码高亮
-- 样式：原生 CSS，设计令牌以 CSS 自定义属性集中管理，无 CSS 框架
-- 脚本：`js/main.js` 负责主题切换与移动端导航
-- Ruby 依赖见 `Gemfile`；另有 Atom 订阅源 `feed.xml`
+- 样式：原生 CSS，颜色、圆角、间距、字体等设计令牌用 CSS 自定义属性集中管理
+- 脚本：`js/main.js`，负责主题切换与移动端导航
+- 依赖版本见 `Gemfile`
 
 ## 目录结构
 
@@ -32,6 +36,8 @@ docs/                  设计文档：design-system.md 记录设计令牌与组�
 Gemfile                Ruby 依赖
 ```
 
+文章 URL 由 `_config.yml` 中的 permalink 决定，形如 `/2018/05/25/vim-shortcuts.html`；重命名文章文件会改变 URL，已有外链需要同步。
+
 ## 本地预览
 
 需要 Ruby 与 Bundler，依赖版本见 `Gemfile`：
@@ -41,11 +47,13 @@ bundle install
 bundle exec jekyll serve
 ```
 
-浏览器打开 <http://127.0.0.1:4000>。`jekyll serve` 会监听源文件变化并自动重建；只想构建时用 `bundle exec jekyll build`，产物在 `_site/`（已被 `.gitignore` 忽略）。
+浏览器打开 <http://127.0.0.1:4000>。`jekyll serve` 会监听源文件变化并自动重建；只构建不启动服务时用 `bundle exec jekyll build`，产物在 `_site/`（已被 `.gitignore` 忽略）。
+
+如果本机 Ruby 版本与 `Gemfile` 中的旧版本依赖不兼容，也可以直接安装 Jekyll 3.9 系列后运行 `jekyll serve`，不经过 Bundler。
 
 ## 新增文章
 
-1. 在 `_posts/` 下新建 `YYYY-MM-DD-slug.md`，例如 `2026-01-01-my-note.md`。**日期取自文件名**，也就是文章发布日期与 URL 中的日期，不要在 front matter 再写 `date`（避免时区导致日期偏移）。
+1. 在 `_posts/` 下新建 `YYYY-MM-DD-slug.md`，例如 `2026-01-01-my-note.md`。**日期取自文件名**，也就是文章发布日期与 URL 中的日期，不要在 front matter 里再写 `date`（避免时区导致日期偏移）。
 2. 文件头部写 front matter，正文使用 Markdown（GFM）：
 
 ```yaml
@@ -64,8 +72,8 @@ tags: [tag-one, tag-two]
 
 ## 设计说明
 
-Facebook 蓝风格的视觉规范（颜色、字体、间距、圆角、阴影、组件类名）见 [docs/design-system.md](docs/design-system.md)；设计令牌以 CSS 自定义属性形式定义在 `css/main.css` 的 `:root` 中，浅色/深色主题各一套。
+页面采用现代信息流式布局：浅灰底色、白色圆角卡片、蓝色强调色与系统字体，配合克制的阴影和分割线；浅色与深色主题各有一套颜色令牌。完整规范（颜色、字体、间距、圆角、阴影、组件类名）见 [docs/design-system.md](docs/design-system.md)，令牌定义在 `css/main.css` 的 `:root` 中。
 
 ## 部署
 
-推送到 `main` 分支即可，GitHub Pages 会自动构建并发布。`_site/` 是构建产物，无需提交。
+仓库 Settings → Pages 的 Source 选择 **Deploy from a branch**，分支 `main`、目录 `/ (root)`；之后每次 push 到 `main`，GitHub Pages 会自动构建并发布。`_site/` 是本地构建产物，无需提交。

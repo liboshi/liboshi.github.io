@@ -1,6 +1,6 @@
-# 设计系统 —— Facebook 风格
+# 设计系统 —— 现代信息流风格
 
-本站视觉参考 Facebook（2024–2025）桌面与移动端界面：浅灰页面底色 `#F0F2F5`、白色圆角卡片、`#1877F2` 品牌蓝、系统字体、克制的 1px 阴影与 8px 圆角。所有颜色、圆角、间距、字体均通过 CSS 自定义属性集中管理，定义在 [`css/main.css`](../css/main.css) 的 `:root` 中。
+本站视觉采用现代信息流式界面：浅灰页面底色 `#F0F2F5`、白色圆角卡片、`#1877F2` 强调蓝、系统字体、克制的 1px 阴影与 8px 圆角。所有颜色、圆角、间距、字体均通过 CSS 自定义属性集中管理，定义在 [`css/main.css`](../css/main.css) 的 `:root` 中。
 
 ## 1. 颜色令牌
 
@@ -8,7 +8,7 @@
 
 | 令牌 | 值 | 用途 |
 | --- | --- | --- |
-| `--color-bg` | `#F0F2F5` | 页面底色（Facebook 经典浅灰） |
+| `--color-bg` | `#F0F2F5` | 页面底色（浅灰） |
 | `--color-surface` | `#FFFFFF` | 卡片、顶栏、弹层 |
 | `--color-surface-hover` | `#F2F3F5` | 列表行 / 导航项悬停 |
 | `--color-surface-pressed` | `#E4E6EB` | 次级按钮、按下态 |
@@ -29,7 +29,7 @@
 
 | 令牌 | 值 | 用途 |
 | --- | --- | --- |
-| `--color-bg` | `#18191A` | 页面底色（Facebook 深色模式） |
+| `--color-bg` | `#18191A` | 页面底色（深色） |
 | `--color-surface` | `#242526` | 卡片、顶栏 |
 | `--color-surface-hover` | `#3A3B3C` | 悬停 / 输入框 |
 | `--color-surface-pressed` | `#4E4F50` | 按下态 |
@@ -96,12 +96,12 @@
 
 | 旧实现 | 新实现 |
 | --- | --- |
-| Bootstrap 3 CDN（CSS/JS/theme） | 删除，改为手写语义化 CSS（零外部依赖） |
-| 红色主色 `#ce2812` | 品牌蓝 `#1877F2` |
+| 旧版 CSS/JS 框架 CDN | 删除，改为手写语义化 CSS（零外部依赖） |
+| 红色主色 `#ce2812` | 强调蓝 `#1877F2` |
 | `navigation_bg.png` 固定顶栏 | 白色 sticky 顶栏 + 阴影 |
 | 三套重复的 layout 模板 | `default` 基础骨架 + `home` / `post` / `page` 三个内容布局 |
 | 硬编码导航（含 3 个 404 链接：`/downloads`、`/docs`、`/libraries`） | `_data/navigation.yml` 驱动，仅保留真实页面 |
-| Baidu 统计 JS（http 混合内容） | 删除 |
+| 旧版第三方统计脚本（http 混合内容） | 删除 |
 | `site.posts` 侧栏重复列表 | 首页信息流卡片 + `/posts/` 归档页 |
 | `pygments: true`（已废弃） | `kramdown` + `rouge` 语法高亮 |
 
@@ -109,6 +109,6 @@
 
 - 语义化结构：`header / nav / main / article / aside / footer`，每页唯一 `h1`。
 - 跳转链接 `.skip-link`、可见 `:focus-visible` 聚焦环、`aria-current="page"`。
-- 图片必须有 `alt`；装饰性封面用 `role="img"` + `aria-label`。
-- 正文对比度：主文本 19:1、次要文本 5.9:1、辅助文本 5.1:1（均满足 AA）。品牌蓝 `#1877F2` 用于按钮与链接（与 Facebook 原色一致，白底对比度 4.2:1，仅用于加粗/较大的 UI 文本，正文链接带下划线）。
+- 图片必须有 `alt`；纯装饰性元素（如封面）使用 `aria-hidden="true"`。
+- 正文对比度：主文本 19:1、次要文本 5.9:1、辅助文本 5.1:1（均满足 AA）。强调蓝 `#1877F2` 用于按钮与链接（白底对比度 4.2:1，仅用于加粗/较大的 UI 文本，正文链接带下划线）。
 - 支持 `prefers-color-scheme` 与 `prefers-reduced-motion`。
