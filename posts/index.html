@@ -1,0 +1,26 @@
+---
+layout: page
+title: Posts
+description: Every post published on this site, archived by year.
+permalink: /posts/
+---
+
+{%- assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+{%- for year in posts_by_year %}
+<section class="archive-year" aria-labelledby="year-{{ year.name }}">
+  <h2 class="archive-year__title" id="year-{{ year.name }}">
+    {{ year.name }}
+    <span class="section-count">{{ year.items | size }}</span>
+  </h2>
+  <ol class="archive-list">
+    {%- for post in year.items %}
+    <li class="archive-list__item">
+      <a href="{{ post.url | relative_url }}">
+        <span class="archive-list__title">{{ post.title }}</span>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d' }}</time>
+      </a>
+    </li>
+    {%- endfor %}
+  </ol>
+</section>
+{%- endfor %}

@@ -1,6 +1,8 @@
 ---
-layout: default
+layout: post
 title: GNU Build System
+description: Walkthrough of the GNU Autotools flow from configure.ac to autoconf and automake.
+tags: [autotools, build-system]
 ---
 
 GNU Build Sytem

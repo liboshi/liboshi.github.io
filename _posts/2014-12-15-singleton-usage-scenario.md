@@ -1,6 +1,8 @@
 ---
-layout: default
+layout: post
 title: Singleton Usage Scenario
+description: 单例模式的典型应用场景，附带 Python 实现示例。
+tags: [design-pattern, python]
 ---
 
 Singleton Usage Scenario

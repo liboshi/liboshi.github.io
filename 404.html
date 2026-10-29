@@ -1,0 +1,19 @@
+---
+layout: default
+title: Page not found
+permalink: /404.html
+---
+<div class="container container--narrow">
+  <div class="card not-found">
+    <p class="not-found__code" aria-hidden="true">404</p>
+    <h1 class="not-found__title">This page isn't available</h1>
+    <p class="not-found__text">
+      The link may be broken, or the page may have been removed.
+      Check that the URL is correct and try again.
+    </p>
+    <div class="not-found__actions">
+      <a class="btn btn--primary" href="{{ '/' | relative_url }}">Go home</a>
+      <a class="btn btn--secondary" href="{{ '/posts/' | relative_url }}">Browse posts</a>
+    </div>
+  </div>
+</div>

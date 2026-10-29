@@ -1,24 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% include header.html %}
-    </head>
-    <body>
+---
+layout: default
+---
+{%- assign content_head = content | strip | slice: 0, 3 %}
+{%- assign page_key = page.date | date: '%Y%m%d%H%M' %}
+{%- assign older_post = false %}
+{%- assign newer_post = false %}
+{%- if page.previous %}
+  {%- assign previous_key = page.previous.date | date: '%Y%m%d%H%M' %}
+  {%- if previous_key > page_key %}
+    {%- assign newer_post = page.previous %}
+    {%- assign older_post = page.next %}
+  {%- else %}
+    {%- assign older_post = page.previous %}
+    {%- assign newer_post = page.next %}
+  {%- endif %}
+{%- endif %}
 
-        {% include navigation.html %}
+<div class="container container--narrow">
+  <a class="back-link" href="{{ '/posts/' | relative_url }}">
+    <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6"/>
+    </svg>
+    All posts
+  </a>
 
-        <div class="container">
-            <div class="row clearfix">
+  <article class="card article" itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article__head">
+      <div class="article__kicker">
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time>
+        {%- if page.tags.size > 0 %}
+        <ul class="article__tags" aria-label="Tags">
+          {%- for tag in page.tags %}
+          <li><span class="tag">{{ tag }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- endif %}
+      </div>
 
-                <div class="col-md-12 column">
+      {%- if content_head != '<h1' %}
+      <h1 class="article__title" itemprop="headline">{{ page.title }}</h1>
+      {%- endif %}
+    </header>
 
-                    {{ content }}
+    <div class="prose" itemprop="articleBody">{{ content }}</div>
 
-                </div>
-            </div>
-        </div>
+    <footer class="article__foot">
+      <a class="btn btn--secondary btn--sm" href="{{ '/posts/' | relative_url }}">← All posts</a>
+      <a class="btn btn--ghost btn--sm" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    </footer>
+  </article>
 
-        {% include footer.html %}
-
-    </body>
-</html>
+  {%- if older_post or newer_post %}
+  <nav class="post-nav" aria-label="Post navigation">
+    {%- if older_post %}
+    <a class="card post-nav__item" href="{{ older_post.url | relative_url }}">
+      <span class="post-nav__label">← Older post</span>
+      <span class="post-nav__title">{{ older_post.title }}</span>
+    </a>
+    {%- endif %}
+    {%- if newer_post %}
+    <a class="card post-nav__item post-nav__item--next" href="{{ newer_post.url | relative_url }}">
+      <span class="post-nav__label">Newer post →</span>
+      <span class="post-nav__title">{{ newer_post.title }}</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+</div>

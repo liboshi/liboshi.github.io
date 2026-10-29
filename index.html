@@ -1,34 +1,8 @@
 ---
 layout: home
-title: Boush Home Page
+description: Personal site and blog of Boush Li — notes on programming, tools and systems.
 ---
 
-<div class="row clearfix">
-    <div class="col-md-12 column liboshi-is">
-        <img src="/images/liboshi_logo_red_icon.png"/>
-        <p>
-        This is Boush Li.
-        </p>
-
-        <div class="liboshi-is-get">
-            <a href="https://github.com/liboshi" class="btn btn-lg btn-default" role="button">Blame Me on GitHub</a>
-        </div>
-    </div>
-
-    <div class="col-md-12">
-        <div id="home">
-            <div>
-                <h2>Latest News</h2>
-                <ul class="posts">
-                    {% for post in site.posts %}
-                    <li>
-                    <p>{{ post.date | date_to_string }}</p>
-                    <a href="{{ post.url }}">{{ post.title }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-    </div>
-
-</div>
+{%- for post in site.posts %}
+{% include post-card.html post=post %}
+{%- endfor %}

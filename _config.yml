@@ -1,7 +1,43 @@
-name: liboshi
+# ---------------------------------------------------------------------------
+# 站点元信息
+# ---------------------------------------------------------------------------
+title: Boush Li
+description: >-
+  Personal site and blog of Boush Li — notes on programming, tools and systems.
+author:
+  name: Boush Li
+  github: liboshi
+  bio: Software engineer · Notes on code, tools and systems
+  avatar: /images/liboshi_logo_red_icon.png
+lang: en
+url: https://liboshi.github.io
+baseurl: ""
+
+# ---------------------------------------------------------------------------
+# 构建
+# ---------------------------------------------------------------------------
 markdown: kramdown
 kramdown:
   input: GFM
-pygments: true
+  syntax_highlighter: rouge
+highlighter: rouge
+permalink: /:year/:month/:day/:title.html
+timezone: Asia/Shanghai
+safe: false
+
+# 文章默认使用 post 布局（文章 front matter 可覆盖）
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
 exclude:
-- README.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - preview
+  - docs
+  - node_modules

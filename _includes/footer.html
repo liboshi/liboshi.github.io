@@ -1,10 +1,24 @@
 <footer class="footer">
-  <div class="container">
-    <script type="text/javascript">
-      var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-      document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fc580505257d934f9050d5ed89d31a009' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <hr>
-    <p>&copy Anonymous</p>
+  <div class="footer__inner">
+    <a class="footer__brand" href="{{ '/' | relative_url }}">
+      <span class="brand__mark brand__mark--sm" aria-hidden="true">B</span>
+      <span>{{ site.title }}</span>
+    </a>
+
+    <nav class="footer__nav" aria-label="Footer navigation">
+      {%- for item in site.data.navigation %}
+      <a href="{{ item.url | relative_url }}">{{ item.label }}</a>
+      {%- endfor %}
+      <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </nav>
+
+    <p class="footer__note">
+      © {{ site.time | date: '%Y' }} {{ site.author.name }}
+      <span aria-hidden="true">·</span>
+      Built with Jekyll
+      <span aria-hidden="true">·</span>
+      <a href="{{ '/feed.xml' | relative_url }}">Atom feed</a>
+    </p>
   </div>
 </footer>

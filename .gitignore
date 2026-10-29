@@ -1,2 +1,16 @@
-*.gitignore
+# Jekyll 构建产物
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# 依赖
+vendor/
+node_modules/
+
+# 本地验证产物（构建报告、截图）
+preview/
+
+# 系统 / 编辑器
+.DS_Store
 *.swp

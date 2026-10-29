@@ -1,13 +1,28 @@
 ---
-layout: default
-title: liboshi - about
+layout: page
+title: About
+description: About Boush Li — software engineer, notes on code, tools and systems.
 ---
 
-<div id="home">
-        <div>
-                <h2>About Me</h2>
-                <p class="liboshi-is">
-                        This is Boush Li
-                </p>
-        </div>
+<div class="about-card">
+  <img class="about-card__avatar"
+       src="{{ site.author.avatar | relative_url }}"
+       alt="{{ site.author.name }}" width="96" height="96">
+  <div class="about-card__text">
+    <h2 class="about-card__name">{{ site.author.name }}</h2>
+    <p class="about-card__bio">{{ site.author.bio }}</p>
+  </div>
 </div>
+
+<p>This is Boush Li.</p>
+
+<p>
+  I use this site as a personal notebook: notes on programming languages, build
+  systems, editors and the tools I reach for every day.
+</p>
+
+<ul class="about-links">
+  <li><a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+  <li><a href="{{ '/posts/' | relative_url }}">Posts archive</a></li>
+  <li><a href="{{ '/feed.xml' | relative_url }}">Atom feed</a></li>
+</ul>

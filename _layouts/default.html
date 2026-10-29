@@ -1,41 +1,19 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        {% include header.html %}
-    </head>
-    <body>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    {% include head.html %}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-        {% include navigation.html %}
+    {% include header.html %}
 
-        <div class="container">
+    <main id="main" class="site-main">
+      {{ content }}
+    </main>
 
-            <div class="row clearfix">
+    {% include footer.html %}
 
-                <div class="col-md-12 column">
-
-                    <div class="row clearfix">
-                        <div class="col-md-9 column">
-
-                            {{ content }}
-
-                        </div>
-                        <div class="col-md-3 column">
-
-                            <h2>Latest News</h2>
-                            <ul class="posts">
-                                {% for post in site.posts %}
-                                <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-                                {% endfor %}
-                            </ul>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        {% include footer.html %}
-
-    </body>
+    <script src="{{ '/js/main.js' | relative_url }}" defer></script>
+  </body>
 </html>

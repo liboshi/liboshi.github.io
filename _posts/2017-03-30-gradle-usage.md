@@ -1,6 +1,8 @@
 ---
-layout: default
+layout: post
 title: Gradle Usage
+description: Gradle overview and links to official guides.
+tags: [gradle, build-system]
 ---
 
 Gradle Usage

@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        {% include header.html %}
-    </head>
-    <body>
+---
+layout: default
+---
+<div class="container">
+  {% include profile.html active="home" %}
 
-        {% include navigation.html %}
+  <div class="layout-grid">
+    <section class="feed" id="latest-posts" aria-labelledby="feed-title">
+      <h2 class="section-title" id="feed-title">
+        Latest posts
+        <span class="section-count">{{ site.posts | size }}</span>
+      </h2>
+      {{ content }}
+    </section>
 
-        <div class="container">
-
-            <div class="row clearfix">
-                <div class="col-md-12 column">
-
-                    {{ content }}
-
-                </div>
-            </div>
-        </div>
-
-        {% include footer.html %}
-
-    </body>
-</html>
+    {% include rail.html %}
+  </div>
+</div>

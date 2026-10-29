@@ -1,6 +1,8 @@
 ---
-layout: default
+layout: post
 title: Markdown Syntax
+description: Markdown 语法参考：区块元素、行内元素与特殊字符处理。
+tags: [markdown, writing]
 ---
 
 Markdown: Syntax
