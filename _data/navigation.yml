@@ -1,7 +1,7 @@
-# 主导航
-- label: 首页
+# 主导航（真实存在的页面；旧版的 /downloads、/docs、/libraries 是 404 死链，已移除）
+- label: Home
   url: /
-- label: 文章
+- label: Posts
   url: /posts/
-- label: 关于
+- label: About
   url: /about/

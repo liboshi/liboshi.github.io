@@ -1,42 +1,64 @@
 /* ==========================================================================
-   Rouge syntax highlighting — warm monochrome palette.
-   Backgrounds and borders come from .prose .highlight in css/main.css.
+   Rouge syntax highlighting — tuned to the site palette.
+   Backgrounds are provided by .prose .highlight in css/main.css.
    ========================================================================== */
 
 :root {
-  --syntax-keyword: #d9a97c;
-  --syntax-string: #a6b98f;
-  --syntax-number: #d9b26a;
-  --syntax-name: #c3aecd;
-  --syntax-comment: rgba(240, 237, 229, 0.42);
-  --syntax-operator: rgba(240, 237, 229, 0.78);
-  --syntax-error: #e08a7a;
-  --syntax-error-bg: rgba(224, 138, 122, 0.16);
-  --syntax-inserted: #a6b98f;
-  --syntax-inserted-bg: rgba(166, 185, 143, 0.16);
-  --syntax-deleted: #e08a7a;
-  --syntax-deleted-bg: rgba(224, 138, 122, 0.14);
-  --syntax-highlight-bg: rgba(217, 178, 106, 0.16);
+  --syntax-keyword: #0b5fcc;
+  --syntax-string: #116329;
+  --syntax-number: #953800;
+  --syntax-name: #8250df;
+  --syntax-comment: #6e7781;
+  --syntax-operator: #57606a;
+  --syntax-bg: #f5f6f7;
+  --syntax-error: #cf222e;
+  --syntax-error-bg: #ffebe9;
+  --syntax-inserted: #116329;
+  --syntax-inserted-bg: #dafbe1;
+  --syntax-deleted: #82071e;
+  --syntax-deleted-bg: #ffebe9;
+  --syntax-highlight-bg: #fff8c5;
 }
 
-:root[data-theme="light"] {
-  --syntax-keyword: #8a4a1f;
-  --syntax-string: #3f6b3a;
-  --syntax-number: #9a5a1f;
-  --syntax-name: #6b4a8a;
-  --syntax-comment: #6e6a60;
-  --syntax-operator: #3a372f;
-  --syntax-error: #a33a2a;
-  --syntax-error-bg: rgba(163, 58, 42, 0.12);
-  --syntax-inserted: #3f6b3a;
-  --syntax-inserted-bg: rgba(63, 107, 58, 0.12);
-  --syntax-deleted: #a33a2a;
-  --syntax-deleted-bg: rgba(163, 58, 42, 0.12);
-  --syntax-highlight-bg: rgba(154, 90, 31, 0.14);
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --syntax-keyword: #58a6ff;
+    --syntax-string: #7ee787;
+    --syntax-number: #ffa657;
+    --syntax-name: #d2a8ff;
+    --syntax-comment: #8b949e;
+    --syntax-operator: #e4e6eb;
+    --syntax-bg: #1c1d1f;
+    --syntax-error: #ff7b72;
+    --syntax-error-bg: rgba(248, 81, 73, 0.15);
+    --syntax-inserted: #7ee787;
+    --syntax-inserted-bg: rgba(46, 160, 67, 0.15);
+    --syntax-deleted: #ffa198;
+    --syntax-deleted-bg: rgba(248, 81, 73, 0.15);
+    --syntax-highlight-bg: rgba(187, 128, 9, 0.15);
+  }
+}
+
+:root[data-theme="dark"] {
+  --syntax-keyword: #58a6ff;
+  --syntax-string: #7ee787;
+  --syntax-number: #ffa657;
+  --syntax-name: #d2a8ff;
+  --syntax-comment: #8b949e;
+  --syntax-operator: #e4e6eb;
+  --syntax-bg: #1c1d1f;
+  --syntax-error: #ff7b72;
+  --syntax-error-bg: rgba(248, 81, 73, 0.15);
+  --syntax-inserted: #7ee787;
+  --syntax-inserted-bg: rgba(46, 160, 67, 0.15);
+  --syntax-deleted: #ffa198;
+  --syntax-deleted-bg: rgba(248, 81, 73, 0.15);
+  --syntax-highlight-bg: rgba(187, 128, 9, 0.15);
 }
 
 .highlight {
-  color: var(--text);
+  background: var(--syntax-bg);
+  color: var(--color-text);
 }
 
 /* Comments */
@@ -66,6 +88,7 @@
 .highlight .kr,
 .highlight .kt {
   color: var(--syntax-keyword);
+  font-weight: 600;
 }
 
 /* Strings */
@@ -121,13 +144,14 @@
 .highlight .nc,
 .highlight .nf,
 .highlight .ne {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* Operators and punctuation */
 .highlight .o,
 .highlight .ow {
   color: var(--syntax-operator);
+  font-weight: 600;
 }
 
 /* Diffs, errors, emphasis */
@@ -153,7 +177,7 @@
 }
 
 .highlight .gs {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .highlight .hll {
@@ -161,9 +185,5 @@
 }
 
 .highlight .w {
-  color: var(--syntax-comment);
-}
-
-.highlight .gp {
   color: var(--syntax-comment);
 }

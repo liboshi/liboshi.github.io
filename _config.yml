@@ -3,13 +3,13 @@
 # ---------------------------------------------------------------------------
 title: Boush Li
 description: >-
-  Boush Li 的个人主页与技术博客——编程语言、构建系统、编辑器与日常工具的笔记。
+  Personal site and blog of Boush Li — notes on programming, tools and systems.
 author:
   name: Boush Li
   github: liboshi
-  bio: 软件工程师 · 记录代码、工具与系统
+  bio: Software engineer · Notes on code, tools and systems
   avatar: /images/liboshi_logo_red_icon.png
-lang: zh-CN
+lang: en
 url: https://liboshi.github.io
 baseurl: ""
 
