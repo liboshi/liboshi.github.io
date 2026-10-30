@@ -1,18 +1,9 @@
 ---
 layout: default
 ---
-<div class="container">
-  {% include profile.html active="home" %}
-
-  <div class="layout-grid">
-    <section class="feed" id="latest-posts" aria-labelledby="feed-title">
-      <h2 class="section-title" id="feed-title">
-        Latest posts
-        <span class="section-count">{{ site.posts | size }}</span>
-      </h2>
-      {{ content }}
-    </section>
-
-    {% include rail.html %}
-  </div>
+<div class="home__stage">
+  {% include home-rail.html %}
+  {% include wall.html %}
 </div>
+
+{% include home-mobile.html %}

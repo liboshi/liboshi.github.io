@@ -1,24 +1,18 @@
-<footer class="footer">
-  <div class="footer__inner">
-    <a class="footer__brand" href="{{ '/' | relative_url }}">
-      <span class="brand__mark brand__mark--sm" aria-hidden="true">B</span>
+<footer class="site-foot">
+  <div class="site-foot__inner">
+    <a class="wordmark" href="{{ '/' | relative_url }}">
+      <span class="wordmark__mark" aria-hidden="true">B</span>
       <span>{{ site.title }}</span>
     </a>
 
-    <nav class="footer__nav" aria-label="Footer navigation">
+    <nav class="site-foot__nav" aria-label="页脚导航">
       {%- for item in site.data.navigation %}
       <a href="{{ item.url | relative_url }}">{{ item.label }}</a>
       {%- endfor %}
-      <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
     </nav>
 
-    <p class="footer__note">
-      © {{ site.time | date: '%Y' }} {{ site.author.name }}
-      <span aria-hidden="true">·</span>
-      Built with Jekyll
-      <span aria-hidden="true">·</span>
-      <a href="{{ '/feed.xml' | relative_url }}">Atom feed</a>
-    </p>
+    <p class="site-foot__note">© {{ site.time | date: '%Y' }} {{ site.author.name }} · Built with Jekyll</p>
   </div>
 </footer>

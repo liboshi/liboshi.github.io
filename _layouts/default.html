@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en' }}">
+<html lang="{{ site.lang | default: 'zh-CN' }}" class="no-js">
   <head>
     {% include head.html %}
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body
+    data-page="{% if page.url == '/' %}home{% elsif page.collection == 'posts' %}post{% elsif page.url == '/posts/' %}archive{% elsif page.url == '/about/' %}about{% else %}page{% endif %}"
+    class="{% if page.url == '/' %}page-home{% else %}page-inner{% endif %}">
+    <a class="skip-link" href="#main">跳到主要内容</a>
 
     {% include header.html %}
 

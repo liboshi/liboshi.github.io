@@ -16,51 +16,60 @@ layout: default
   {%- endif %}
 {%- endif %}
 
-<div class="container container--narrow">
-  <a class="back-link" href="{{ '/posts/' | relative_url }}">
-    <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M15 18l-6-6 6-6"/>
-    </svg>
-    All posts
-  </a>
+<div class="article-shell">
+  <div class="article-top">
+    <a class="back-link" href="{{ '/posts/' | relative_url }}">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      全部文章
+    </a>
+  </div>
 
-  <article class="card article" itemscope itemtype="https://schema.org/BlogPosting">
-    <header class="article__head">
-      <div class="article__kicker">
-        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time>
+  <article itemscope itemtype="https://schema.org/BlogPosting">
+    <header>
+      <div class="article-kicker">
+        <time class="mono" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%Y.%m.%d' }}</time>
         {%- if page.tags.size > 0 %}
-        <ul class="article__tags" aria-label="Tags">
-          {%- for tag in page.tags %}
-          <li><span class="tag">{{ tag }}</span></li>
-          {%- endfor %}
-        </ul>
+        <span class="mono" aria-label="标签">
+          {%- for tag in page.tags %}{{ tag }}{% unless forloop.last %} / {% endunless %}{% endfor %}
+        </span>
         {%- endif %}
       </div>
 
-      {%- if content_head != '<h1' %}
-      <h1 class="article__title" itemprop="headline">{{ page.title }}</h1>
+      <h1 class="article-title" itemprop="headline">{{ page.title }}</h1>
+
+      {%- if page.description %}
+      <p class="article-desc">{{ page.description }}</p>
       {%- endif %}
     </header>
 
-    <div class="prose" itemprop="articleBody">{{ content }}</div>
+    <hr class="article-rule">
 
-    <footer class="article__foot">
-      <a class="btn btn--secondary btn--sm" href="{{ '/posts/' | relative_url }}">← All posts</a>
-      <a class="btn btn--ghost btn--sm" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+    {%- assign content_body = content -%}
+    {%- if content_head == '<h1' -%}
+      {%- assign content_parts = content | split: '</h1>' -%}
+      {%- assign content_body = content_parts | slice: 1, 200 | join: '</h1>' -%}
+    {%- endif -%}
+    <div class="prose" itemprop="articleBody">{{ content_body }}</div>
+
+    <footer class="article-foot">
+      <a class="back-link" href="{{ '/posts/' | relative_url }}">← 全部文章</a>
+      <a class="ghost-link" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
     </footer>
   </article>
 
   {%- if older_post or newer_post %}
-  <nav class="post-nav" aria-label="Post navigation">
+  <nav class="post-nav" aria-label="文章导航">
     {%- if older_post %}
-    <a class="card post-nav__item" href="{{ older_post.url | relative_url }}">
-      <span class="post-nav__label">← Older post</span>
+    <a class="post-nav__item" href="{{ older_post.url | relative_url }}">
+      <span class="mono">更早的文章</span>
       <span class="post-nav__title">{{ older_post.title }}</span>
     </a>
     {%- endif %}
     {%- if newer_post %}
-    <a class="card post-nav__item post-nav__item--next" href="{{ newer_post.url | relative_url }}">
-      <span class="post-nav__label">Newer post →</span>
+    <a class="post-nav__item post-nav__item--next" href="{{ newer_post.url | relative_url }}">
+      <span class="mono">更新的文章</span>
       <span class="post-nav__title">{{ newer_post.title }}</span>
     </a>
     {%- endif %}

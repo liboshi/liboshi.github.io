@@ -1,114 +1,129 @@
-# 设计系统 —— 现代信息流风格
+# 设计系统 —— 编辑式深色主页
 
-本站视觉采用现代信息流式界面：浅灰页面底色 `#F0F2F5`、白色圆角卡片、`#1877F2` 强调蓝、系统字体、克制的 1px 阴影与 8px 圆角。所有颜色、圆角、间距、字体均通过 CSS 自定义属性集中管理，定义在 [`css/main.css`](../css/main.css) 的 `:root` 中。
+本站采用「近黑底 + 暖白字 + 细线 + 卡片墙」的编辑式视觉：首页是一块固定分栏的画布，左栏负责身份与导航，右侧是持续漂移的文章卡片墙；内容页回到常规文档流，保证长文阅读。所有颜色、字体、间距、圆角与动效都通过 CSS 自定义属性集中管理，定义在 [`css/main.css`](../css/main.css) 的 `:root` 与 `:root[data-theme="light"]` 中。
 
 ## 1. 颜色令牌
 
-### 浅色（默认）
+### 深色（默认）
 
 | 令牌 | 值 | 用途 |
 | --- | --- | --- |
-| `--color-bg` | `#F0F2F5` | 页面底色（浅灰） |
-| `--color-surface` | `#FFFFFF` | 卡片、顶栏、弹层 |
-| `--color-surface-hover` | `#F2F3F5` | 列表行 / 导航项悬停 |
-| `--color-surface-pressed` | `#E4E6EB` | 次级按钮、按下态 |
-| `--color-primary` | `#1877F2` | 品牌蓝：主按钮、链接、选中态 |
-| `--color-primary-hover` | `#166FE5` | 主按钮悬停 |
-| `--color-primary-pressed` | `#1464CC` | 主按钮按下 |
-| `--color-primary-soft` | `#E7F3FF` | 选中导航底色、标签底色 |
-| `--color-text` | `#050505` | 主文本 |
-| `--color-text-secondary` | `#65676B` | 次要文本、日期、说明 |
-| `--color-text-tertiary` | `#6E7175` | 辅助文本、占位符（对白底 5.1:1，满足 AA） |
-| `--color-divider` | `#CED0D4` | 分割线 |
-| `--color-border` | `#DADDE1` | 输入框 / 卡片描边 |
-| `--color-success` | `#31A24C` | 成功状态 |
-| `--color-danger` | `#E41E3F` | 错误、404 强调 |
-| `--color-link` | `#1877F2` | 正文链接 |
+| `--bg` | `#070706` | 页面与卡片墙底色 |
+| `--bg-veil` | `rgba(7, 7, 6, .86)` | 顶栏毛玻璃、遮罩 |
+| `--surface` | `#101010` | 卡片、代码块外层 |
+| `--surface-2` | `#1a1a18` | 搜索框、次级表面 |
+| `--surface-3` | `#232320` | 悬停、按下态 |
+| `--code-bg` | `#0c0c0b` | 代码块底色 |
+| `--text` | `#f0ede5` | 主文本、主标题 |
+| `--text-2` | `rgba(240, 237, 229, .66)` | 简介、摘要、次要文本（约 7.6:1） |
+| `--text-3` | `rgba(240, 237, 229, .55)` | 等宽标签、辅助信息（约 5.5:1） |
+| `--line` | `rgba(240, 237, 229, .12)` | 发丝分割线、卡片描边 |
+| `--line-2` | `rgba(240, 237, 229, .24)` | 输入框描边、强调分割线 |
+| `--focus` | `rgba(240, 237, 229, .9)` | 键盘焦点环 |
+| `--tint-1…5` | 陶土 / 苔绿 / 灰蓝 / 沙金 / 砖红，16–30% 透明度 | 文章卡片的低饱和底色 |
 
-### 深色（跟随系统，可用右上角按钮切换）
+### 浅色（暖纸色）
 
 | 令牌 | 值 | 用途 |
 | --- | --- | --- |
-| `--color-bg` | `#18191A` | 页面底色（深色） |
-| `--color-surface` | `#242526` | 卡片、顶栏 |
-| `--color-surface-hover` | `#3A3B3C` | 悬停 / 输入框 |
-| `--color-surface-pressed` | `#4E4F50` | 按下态 |
-| `--color-primary` | `#2D88FF` | 深色模式品牌蓝（更亮） |
-| `--color-primary-soft` | `rgba(45, 136, 255, .16)` | 选中背景 |
-| `--color-text` | `#E4E6EB` | 主文本 |
-| `--color-text-secondary` | `#B0B3B8` | 次要文本 |
-| `--color-text-tertiary` | `#8A8D91` | 辅助文本 |
-| `--color-divider` | `#3E4042` | 分割线 |
-| `--color-border` | `#3E4042` | 描边 |
+| `--bg` | `#f2efe6` | 页面与卡片墙底色 |
+| `--surface` | `#faf8f1` | 卡片、顶栏 |
+| `--surface-2` | `#eae5d8` | 搜索框、次级表面 |
+| `--surface-3` | `#e1dbcc` | 悬停、按下态 |
+| `--code-bg` | `#ece7da` | 代码块底色 |
+| `--text` | `#14140f` | 主文本、主标题 |
+| `--text-2` | `rgba(20, 20, 15, .72)` | 简介、摘要（约 6.9:1） |
+| `--text-3` | `rgba(20, 20, 15, .68)` | 等宽标签、辅助信息（约 6.0:1） |
+| `--line` | `rgba(20, 20, 15, .14)` | 发丝分割线、卡片描边 |
+| `--line-2` | `rgba(20, 20, 15, .3)` | 输入框描边 |
+| `--tint-1…5` | 同色系加深，16–18% 透明度 | 卡片底色 |
+
+### 反色卡片
+
+深色主题里少数文章卡片使用暖白底、深色字，形成「印刷海报」的节奏点；浅色主题里它们反转为深底暖白字，保持对比。由 `--paper-bg` / `--paper-ink` / `--paper-line` 控制，对应 `.tile--paper`。
+
+### 代码高亮
+
+`css/syntax.css` 与主色板共用一套暖色变量：关键字 `#d9a97c`、字符串 `#a8b98c`、注释 `#6f6c63`、函数 `#c9b184` 等；浅色主题下切换为低饱和深色版本，避免纯黑与高亮色冲撞。
 
 ## 2. 字体
 
 ```css
---font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-  "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB",
-  "Microsoft YaHei", sans-serif;
+--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+  Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
   "Liberation Mono", "Courier New", monospace;
 ```
 
+全部使用系统字体，无外部字体请求。中文正文依赖系统黑体，字号与行高按中文阅读习惯调过。
+
 | 角色 | 字号 / 行高 / 字重 |
 | --- | --- |
-| 正文 / UI | 15px / 1.5 / 400 |
-| 小字（日期、meta） | 13px / 1.4 / 400 |
-| 卡片标题 | 17px / 1.35 / 600 |
-| 区块标题 h2 | 20px / 1.3 / 700 |
-| 页面主标题 h1 | 28px / 1.25 / 700（移动端 24px） |
-| 首页姓名 | 32px / 1.2 / 700（移动端 26px） |
-| 正文排版 `.prose` | 16px / 1.7 |
+| 首页主标题 `.rail__title` | 32px / 1.14 / 400，中文标题可带斜体强调 |
+| 首页简介 `.rail__sub` | 14px / 1.75 / 400 |
+| 等宽标签 `.mono` | 10px / 1.5 / 400，大写，字距 `.08em` |
+| 卡片标题 `.tile__title` | 20px / 1.3 / 400（大卡 26px，窄屏 19px） |
+| 资料卡数值 `.tile__big` | 44px / 1 / 300 |
+| 内页标题 `.article-title` | `clamp(30px, 4.2vw, 42px)` / 1.18 / 400 |
+| 归档页标题 `.page-title` | `clamp(32px, 5vw, 46px)` / 1.12 / 400 |
+| 正文 `.prose` | 15.5px / 1.85 / 400，议论文宽度 720px |
+| 文章摘要 `.article-desc` | 16px / 1.7 / 400，颜色 `--text-2` |
 
-## 3. 间距、圆角、阴影
+## 3. 间距、圆角、布局
 
-- 间距刻度：`4 / 8 / 12 / 16 / 20 / 24 / 32 / 48`（`--space-*`）。
-- 圆角：卡片 `8px`、按钮/输入框 `6px`、标签/导航 pill `999px`。
-- 阴影：
-  - 卡片：`0 1px 2px rgba(0,0,0,.10), 0 2px 4px rgba(0,0,0,.04)`
-  - 顶栏：`0 1px 2px rgba(0,0,0,.12)`
-  - 聚焦环：`0 0 0 3px rgba(24,119,242,.35)`
-- 过渡：`120ms ease`；`prefers-reduced-motion: reduce` 时全部关闭。
-- 布局宽度：内容区 `1100px`，文章正文 `780px`，顶栏高度 `56px`。
+- 间距刻度：`4 / 8 / 12 / 16 / 20 / 24 / 32 / 48 / 64`，由具体组件直接使用数值，常用值保持 4 的倍数。
+- 圆角：卡片与输入框 `8px`（`--radius`），小控件 `6px`（`--radius-sm`），标签为胶囊形 `999px`。
+- 布局变量：`--rail-w: 408px`（左栏）、`--head-h: 64px`、`--max-w: 1200px`、`--reading-w: 720px`。
+- 首页 `.home__stage` 使用 `grid-template-columns: var(--rail-w) minmax(0, 1fr)` 固定满屏；`< 1200px` 时切换为普通滚动的移动端首页。
+- 内容页最大宽度 1200px，文章正文 720px；归档页 900px。
+- 阴影几乎不用，层次主要由底色、描边与留白建立。
 
-## 4. 组件规格
+## 4. 组件
 
 | 组件 | 类名 | 说明 |
 | --- | --- | --- |
-| 顶栏 | `.topbar` / `.topbar__inner` | 白底、56px 高、sticky、1px 阴影；移动端折叠为下拉菜单 |
-| 品牌标 | `.brand` / `.brand__mark` | 36px 品牌蓝圆形 + 白色首字母，替代旧的红色位图 logo（保留其作为头像） |
-| 导航 pill | `.topnav__link` | 悬停浅灰底；选中 `--color-primary-soft` 底 + 深蓝字 |
-| 按钮 | `.btn` + `.btn--primary` / `.btn--secondary` / `.btn--ghost` | 主按钮品牌蓝白字；次级 `#E4E6EB` 底；ghost 描边 |
-| 图标按钮 | `.icon-btn` | 40px 圆形，用于主题切换 / 移动菜单 |
-| 卡片 | `.card` | 白底、8px 圆角、1px 阴影、16px 内边距 |
-| 封面 | `.profile-cover` | 品牌蓝渐变（`#0866FF → #1877F2 → #0C4DA2`）+ 柔光，替代旧 `navigation_bg.png` |
-| 头像 | `.avatar` / `.avatar--xl` | 圆形；首页 168px，带 4px 白描边并上移压住封面 |
-| 页签 | `.tabs` / `.tab` | 白底水平页签，选中态 3px 品牌蓝下划线 |
-| 文章卡片 | `.post-card` | 作者行（小头像 + 姓名 + 日期）→ 标题 → 摘要 → 底部操作行 |
-| 标签 | `.tag` | pill 形，`--color-primary-soft` 底 + 深蓝字 |
-| 正文 | `.prose` | h1–h4、列表、引用、表格、行内代码、代码块、分割线排版 |
-| 上一篇/下一篇 | `.post-nav` | 两张并排卡片，移动端纵向堆叠 |
-| 页脚 | `.footer` | 细分割线 + 次要文本，无第三方统计脚本 |
-| 404 | `.not-found` | 大号 `404` + 返回首页/归档按钮 |
+| 站内页顶栏 | `.site-head` / `.site-head__inner` | sticky、`--bg-veil` + `backdrop-filter`、底部发丝线；首页隐藏 |
+| 字标 | `.wordmark` / `.wordmark__mark` | 方形描边标记 + 姓名 + 「个人主页」小字 |
+| 导航 | `.site-nav` / `.site-nav a[aria-current]` | 小号无衬线，当前页用暖白与下划线区分 |
+| 主题按钮 | `.js-theme-toggle` / `.theme-btn` | 月亮 / 太阳图标，首页左栏与内页顶栏各一个 |
+| 首页左栏 | `.rail` / `.rail__hero` / `.rail__bottom` | 固定 408px，上：品牌行、主标题、两段简介、标签；下：搜索与站点状态 |
+| 标签筛选 | `.chip` | 11px 胶囊，`aria-pressed` 表示选中 |
+| 搜索框 | `.search` / `.search__field` | 图标 + 输入框 + `/` 快捷键提示 |
+| 卡片墙 | `.wall` / `.wall__track` / `.wall__cols` / `.wall__col` | 三列网格，纵向滚动；渲染三段相同列块实现无缝循环 |
+| 卡片墙遮罩 | `.wall__fade--top` / `.wall__fade--bottom` | 上下渐变，让边缘卡片淡出 |
+| 筛选结果 | `.wall__results` | 筛选时替换卡片墙的等高网格，显示去重后的结果 |
+| 卡片 | `.tile` + `.tile--post` / `--post-lg` / `--quote` / `--stat` / `--profile` / `--link` | 统一 `8px` 圆角、`1px` 发丝描边、`16px` 内边距 |
+| 卡片配色 | `.tile--p1…p5` / `.tile--paper` | 五组低饱和底色 + 反色纸卡 |
+| 文章页 | `.article-shell` / `.article-kicker` / `.article-title` / `.article-desc` / `.prose` | 720px 正文，日期与标签在标题上方，细线分隔 |
+| 正文 | `.prose` | h2/h3 带顶部细线，代码块横向滚动，表格在窄屏内滚动 |
+| 归档 | `.archive` / `.archive-year` / `.archive-list` | 年份分组，等宽日期 + 标题行 |
+| 关于页 | `.about` / `.mark-box` / `.about-section` | 大号首字母标记与分段介绍 |
+| 404 | `.not-found` | 超大 `404` + 返回首页 / 归档的胶囊按钮 |
+| 页脚 | `.site-foot` | 字标、导航、RSS 与 GitHub；首页隐藏 |
+| 移动首页 | `.m-home` / `.m-hero` / `.m-feed` | `< 1200px` 显示，单列（≥720px 双列）卡片流 |
 
-## 5. 迁移映射（旧 → 新）
+## 5. 动效
 
-| 旧实现 | 新实现 |
+- 卡片墙以约 `9px/s` 的速度向上漂移；鼠标移入降到 `0.12×`，键盘聚焦时暂停并居中当前卡片。
+- 卡片与按钮的 hover 只改变底色与描边，过渡 `180ms`，曲线 `cubic-bezier(.22,.61,.36,1)`。
+- 主题切换时给 `<html>` 临时加 `theme-switching`，全局关闭过渡，避免新旧主题颜色在同一帧混用。
+- `prefers-reduced-motion: reduce` 时关闭卡片墙自动漂移与所有过渡；原生滚动仍可用。
+
+## 6. 响应式断点
+
+| 宽度 | 行为 |
 | --- | --- |
-| 旧版 CSS/JS 框架 CDN | 删除，改为手写语义化 CSS（零外部依赖） |
-| 红色主色 `#ce2812` | 强调蓝 `#1877F2` |
-| `navigation_bg.png` 固定顶栏 | 白色 sticky 顶栏 + 阴影 |
-| 三套重复的 layout 模板 | `default` 基础骨架 + `home` / `post` / `page` 三个内容布局 |
-| 硬编码导航（含 3 个 404 链接：`/downloads`、`/docs`、`/libraries`） | `_data/navigation.yml` 驱动，仅保留真实页面 |
-| 旧版第三方统计脚本（http 混合内容） | 删除 |
-| `site.posts` 侧栏重复列表 | 首页信息流卡片 + `/posts/` 归档页 |
-| `pygments: true`（已废弃） | `kramdown` + `rouge` 语法高亮 |
+| `≥ 1280px` | 左栏 408px，三列卡片墙，卡片标题 20 / 26px |
+| `1200–1279px` | 左栏 380px，三列卡片墙，卡片标题 19 / 24px |
+| `< 1200px` | 隐藏固定分栏，改为顶栏 + 移动首页：大标题、搜索、卡片列表（720–1199px 双列） |
+| `≤ 760px` | 顶栏 58px，隐藏 GitHub 链接，内容左右 18px，正文 15px |
+| `≤ 420px` | 导航与主标题进一步缩小 |
 
-## 6. 可访问性约定
+## 7. 可访问性
 
-- 语义化结构：`header / nav / main / article / aside / footer`，每页唯一 `h1`。
-- 跳转链接 `.skip-link`、可见 `:focus-visible` 聚焦环、`aria-current="page"`。
-- 图片必须有 `alt`；纯装饰性元素（如封面）使用 `aria-hidden="true"`。
-- 正文对比度：主文本 19:1、次要文本 5.9:1、辅助文本 5.1:1（均满足 AA）。强调蓝 `#1877F2` 用于按钮与链接（白底对比度 4.2:1，仅用于加粗/较大的 UI 文本，正文链接带下划线）。
-- 支持 `prefers-color-scheme` 与 `prefers-reduced-motion`。
+- 语义化结构：`header / nav / main / article / aside / footer`，每页唯一 `h1`；文章正文若自带同名 H1，会在渲染时移除，避免重复。
+- 跳过导航链接、`:focus-visible` 焦点环、`aria-current="page"`、卡片墙 `aria-label`。
+- 重复的卡片墙列块使用 `aria-hidden="true"` + `inert`，并从 tab 顺序中移除；键盘只会停在可见卡片上。
+- 文本对比度：深色主题主文本 17.2:1、次要 7.6:1、辅助 5.5:1；浅色主题主文本 16:1、次要 6.9:1、辅助 6.0:1，均满足 WCAG AA。
+- 主题切换、筛选、搜索均可用键盘完成：`/` 或 `Ctrl/⌘ + K` 聚焦搜索，`Esc` 清空；卡片墙支持滚轮、触控板与键盘滚动。
+- 不依赖外部字体、CDN、统计脚本或第三方运行时。

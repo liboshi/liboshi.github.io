@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#070706">
 
 {%- assign meta_description = page.description | default: site.description -%}
 {%- if page.title -%}
@@ -19,7 +19,6 @@
 <meta property="og:title" content="{{ document_title }}">
 <meta property="og:description" content="{{ meta_description | strip_html | strip_newlines | escape }}">
 <meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:image" content="{{ site.author.avatar | absolute_url }}">
 {%- if page.collection == 'posts' %}
 <meta property="og:type" content="article">
 <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
@@ -30,13 +29,15 @@
 <meta name="twitter:title" content="{{ document_title }}">
 <meta name="twitter:description" content="{{ meta_description | strip_html | strip_newlines | escape }}">
 
-<!-- 主题初始化：在样式加载前恢复用户选择，避免闪烁 -->
+<!-- Restore the chosen theme before first paint; dark is the default. -->
 <script>
   (function () {
+    var root = document.documentElement;
+    root.classList.remove('no-js');
     try {
       var stored = localStorage.getItem('theme');
       if (stored === 'light' || stored === 'dark') {
-        document.documentElement.setAttribute('data-theme', stored);
+        root.setAttribute('data-theme', stored);
       }
     } catch (e) {}
   })();

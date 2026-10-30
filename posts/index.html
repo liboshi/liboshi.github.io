@@ -1,26 +1,39 @@
 ---
-layout: page
-title: Posts
-description: Every post published on this site, archived by year.
+layout: default
+title: 全部文章
+description: 站内所有文章，按年份归档。
 permalink: /posts/
 ---
-
 {%- assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-{%- for year in posts_by_year %}
-<section class="archive-year" aria-labelledby="year-{{ year.name }}">
-  <h2 class="archive-year__title" id="year-{{ year.name }}">
-    {{ year.name }}
-    <span class="section-count">{{ year.items | size }}</span>
-  </h2>
-  <ol class="archive-list">
-    {%- for post in year.items %}
-    <li class="archive-list__item">
-      <a href="{{ post.url | relative_url }}">
-        <span class="archive-list__title">{{ post.title }}</span>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d' }}</time>
-      </a>
-    </li>
-    {%- endfor %}
-  </ol>
-</section>
-{%- endfor %}
+{%- assign count = site.posts | size %}
+{%- assign padded = count | prepend: '0' | slice: -2, 2 %}
+<div class="archive">
+  <header>
+    <h1 class="page-title">全部文章</h1>
+    <p class="page-desc">按年份归档的写作记录，共 {{ count }} 篇。也可以回到<a href="{{ '/' | relative_url }}">首页</a>按标签或关键词浏览。</p>
+  </header>
+
+  <div class="archive-head">
+    <span class="mono">Archive</span>
+    <span class="mono">{{ padded }} posts · {{ site.posts.last.date | date: '%Y' }}—{{ site.posts.first.date | date: '%Y' }}</span>
+  </div>
+
+  {%- for year in posts_by_year %}
+  <section class="archive-year" aria-labelledby="year-{{ year.name }}">
+    <h2 class="archive-year__title" id="year-{{ year.name }}">
+      <span>{{ year.name }}</span>
+      <span>{{ year.items | size }} 篇</span>
+    </h2>
+    <ol class="archive-list">
+      {%- for post in year.items %}
+      <li class="archive-list__item">
+        <a href="{{ post.url | relative_url }}">
+          <span class="archive-list__title">{{ post.title }}</span>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%m.%d' }}</time>
+        </a>
+      </li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endfor %}
+</div>

@@ -1,0 +1,104 @@
+{%- comment -%}
+  One card in the home card wall / mobile feed.
+  kind: post | quote | stat | profile | link
+  Params: post, index, palette, large, href, meta, label, dup
+{%- endcomment -%}
+{%- assign kind = include.kind | default: 'post' -%}
+{%- assign palette = include.palette | default: 1 -%}
+{%- assign dup = include.dup | default: 0 -%}
+{%- assign dupattr = '' -%}
+{%- if dup == 1 -%}
+  {%- assign dupattr = 'data-dup="1" tabindex="-1" aria-hidden="true"' -%}
+{%- endif -%}
+
+{%- if kind == 'post' -%}
+  {%- assign post = include.post -%}
+  {%- assign index = include.index | default: 0 -%}
+  {%- assign num = index | plus: 1 -%}
+  {%- capture searchblob -%}{{ post.title }} {{ post.description }} {{ post.tags | join: ' ' }}{%- endcapture -%}
+  <a class="tile tile--post tile--p{{ palette }}{% if include.large == true %} tile--post-lg{% endif %}{% if include.paper == true %} tile--paper{% endif %}"
+     href="{{ post.url | relative_url }}"
+     data-tile data-article data-url="{{ post.url }}"
+     data-tags="{{ post.tags | join: ' ' | downcase }}"
+     data-search="{{ searchblob | strip_html | normalize_whitespace | downcase | escape }}"
+     {{ dupattr }}>
+    <div class="tile__top">
+      <span class="mono">{% if num < 10 %}0{% endif %}{{ num }}</span>
+      <span class="mono">{{ post.date | date: '%Y.%m' }}</span>
+    </div>
+    <h3 class="tile__title">{{ post.title }}</h3>
+    <div class="tile__bottom">
+      {%- if post.tags.size > 0 -%}
+      <span class="tile__tag">{{ post.tags.first }}</span>
+      {%- else -%}
+      <span></span>
+      {%- endif -%}
+      <span class="tile__arrow" aria-hidden="true">↗</span>
+    </div>
+  </a>
+
+{%- elsif kind == 'quote' -%}
+  {%- assign post = include.post -%}
+  {%- capture searchblob -%}{{ post.title }} {{ post.description }} {{ post.tags | join: ' ' }}{%- endcapture -%}
+  <a class="tile tile--quote tile--p{{ palette }}{% if include.paper == true %} tile--paper{% endif %}"
+     href="{{ post.url | relative_url }}"
+     data-tile data-utility data-url="{{ post.url }}"
+     data-tags="{{ post.tags | join: ' ' | downcase }}"
+     data-search="{{ searchblob | strip_html | normalize_whitespace | downcase | escape }}"
+     {{ dupattr }}>
+    <div class="tile__top">
+      <span class="mono">摘录</span>
+      <span class="mono">{{ post.date | date: '%Y' }}</span>
+    </div>
+    <p class="tile__quote">“{{ post.description }}”</p>
+    <div class="tile__quote-foot">
+      <span>《{{ post.title }}》</span>
+      <span class="tile__arrow" aria-hidden="true">↗</span>
+    </div>
+  </a>
+
+{%- elsif kind == 'stat' -%}
+  {%- assign count = site.posts | size -%}
+  <a class="tile tile--stat tile--p2" href="{{ '/posts/' | relative_url }}" data-tile data-utility {{ dupattr }}>
+    <div class="tile__top">
+      <span class="mono">Archive</span>
+      <span class="mono">{{ site.posts.last.date | date: '%Y' }}—{{ site.posts.first.date | date: '%Y' }}</span>
+    </div>
+    <div>
+      <p class="tile__big">{% if count < 10 %}0{% endif %}{{ count }}</p>
+      <p class="tile__stat-label">篇文章，按年份归档</p>
+    </div>
+    <div class="tile__bottom">
+      <span class="mono">全部文章</span>
+      <span class="tile__arrow" aria-hidden="true">↗</span>
+    </div>
+  </a>
+
+{%- elsif kind == 'profile' -%}
+  <div class="tile tile--profile tile--p1" data-tile data-utility {{ dupattr }}>
+    <div class="tile__top">
+      <span class="mono">Boush Li</span>
+      <span class="mono">since 2014</span>
+    </div>
+    <div>
+      <p class="tile__profile-name">写代码，<br>也写点笔记。</p>
+      <p class="tile__profile-bio">{{ site.author.bio }}</p>
+    </div>
+    <div class="tile__links">
+      <a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      <a href="{{ '/about/' | relative_url }}">关于</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </div>
+  </div>
+
+{%- elsif kind == 'link' -%}
+  <a class="tile tile--link tile--p{{ palette }}"
+     href="{{ include.href | relative_url }}"
+     data-tile data-utility {{ dupattr }}>
+    <div class="tile__top">
+      <span class="mono">{{ include.meta }}</span>
+      <span class="tile__arrow" aria-hidden="true">↗</span>
+    </div>
+    <p class="tile__link-label">{{ include.label }}</p>
+  </a>
+{%- endif -%}
