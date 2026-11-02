@@ -84,7 +84,10 @@
       "url": {{ site.url | jsonify }},
       "image": {{ site.author.avatar | absolute_url | jsonify }},
       "jobTitle": "软件工程师",
-      "sameAs": [{{ site.author.url | jsonify }}]
+      "sameAs": [
+        {{ site.author.url | jsonify }}{% if site.author.bluesky %},
+        {{ site.author.bluesky | prepend: 'https://bsky.app/profile/' | jsonify }}{% endif %}
+      ]
     },
     {
       "@type": "WebSite",

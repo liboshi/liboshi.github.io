@@ -611,7 +611,11 @@ html[data-theme="dark"] .icon--sun {
 }
 
 .profile__meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: var(--color-primary);
+  white-space: nowrap;
 }
 
 .profile__meta a:hover {
@@ -2535,6 +2539,12 @@ a.tag:hover {
 
   .prose .highlight.has-copy pre {
     padding-top: 52px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile__meta > span[aria-hidden="true"] {
+    display: none;
   }
 }
 
