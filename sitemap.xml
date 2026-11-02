@@ -1,0 +1,20 @@
+---
+layout: null
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {%- for post in site.posts %}
+  <url>
+    <loc>{{ post.url | absolute_url | xml_escape }}</loc>
+    <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
+  </url>
+  {%- endfor %}
+  {%- for p in site.pages %}
+  {%- if p.url == '/' or p.url == '/posts/' or p.url == '/tags/' or p.url == '/about/' %}
+  <url>
+    <loc>{{ p.url | absolute_url | xml_escape }}</loc>
+  </url>
+  {%- endif %}
+  {%- endfor %}
+</urlset>

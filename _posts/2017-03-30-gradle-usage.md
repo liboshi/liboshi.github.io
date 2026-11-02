@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Gradle Usage
-description: Gradle overview and links to official guides.
+title: Gradle 使用笔记
+description: 英文笔记：Gradle 概览与官方指南链接。
+lang: en
 tags: [gradle, build-system]
 ---
 

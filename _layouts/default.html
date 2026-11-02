@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en' }}">
+<html lang="{{ site.lang | default: 'zh-CN' }}">
   <head>
     {% include head.html %}
   </head>
-  <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+  <body{% if page.url == '/404.html' %} class="page-404"{% endif %}>
+    <a class="skip-link" href="#main">跳到主要内容</a>
 
     {% include header.html %}
 

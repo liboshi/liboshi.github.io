@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Singleton Usage Scenario
+title: 单例模式的使用场景
 description: 单例模式的典型应用场景，附带 Python 实现示例。
+lang: zh-CN
 tags: [design-pattern, python]
 ---
 

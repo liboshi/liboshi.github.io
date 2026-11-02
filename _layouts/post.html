@@ -1,69 +1,91 @@
 ---
 layout: default
 ---
-{%- assign content_head = content | strip | slice: 0, 3 %}
-{%- assign page_key = page.date | date: '%Y%m%d%H%M' %}
-{%- assign older_post = false %}
-{%- assign newer_post = false %}
-{%- if page.previous %}
-  {%- assign previous_key = page.previous.date | date: '%Y%m%d%H%M' %}
-  {%- if previous_key > page_key %}
-    {%- assign newer_post = page.previous %}
-    {%- assign older_post = page.next %}
-  {%- else %}
-    {%- assign older_post = page.previous %}
-    {%- assign newer_post = page.next %}
-  {%- endif %}
-{%- endif %}
+
+{%- assign post_lang = page.lang | default: site.lang -%}
+{%- assign content_str = content | strip -%}
+{%- assign first_chars = content_str | slice: 0, 3 -%}
+{%- if first_chars == '<h1' -%}
+  {%- assign content_rest = content_str | split: '</h1>' -%}
+  {%- assign content = content_rest[1] | default: content -%}
+{%- endif -%}
 
 <div class="container container--narrow">
+<article class="card article" lang="{{ post_lang }}" itemscope itemtype="https://schema.org/BlogPosting">
   <a class="back-link" href="{{ '/posts/' | relative_url }}">
     <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M15 18l-6-6 6-6"/>
+      <path d="M19 12H5M11 6l-6 6 6 6"/>
     </svg>
-    All posts
+    全部文章
   </a>
 
-  <article class="card article" itemscope itemtype="https://schema.org/BlogPosting">
-    <header class="article__head">
-      <div class="article__kicker">
-        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: '%B %-d, %Y' }}</time>
-        {%- if page.tags.size > 0 %}
-        <ul class="article__tags" aria-label="Tags">
-          {%- for tag in page.tags %}
-          <li><span class="tag">{{ tag }}</span></li>
-          {%- endfor %}
-        </ul>
-        {%- endif %}
-      </div>
-
-      {%- if content_head != '<h1' %}
-      <h1 class="article__title" itemprop="headline">{{ page.title }}</h1>
+  <header class="article__head">
+    <p class="article__kicker">
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+        {{ page.date | date: '%Y 年 %-m 月 %-d 日' }}
+      </time>
+      {%- if page.tags.size > 0 %}
+      <span aria-hidden="true">·</span>
+      <span class="article__tagline">
+        {%- for tag in page.tags %}
+        <a class="tag tag--link" href="{{ '/tags/' | relative_url }}#tag-{{ tag | slugify }}" rel="tag">{{ tag }}</a>
+        {%- endfor %}
+      </span>
       {%- endif %}
-    </header>
+    </p>
+    <h1 class="article__title" itemprop="headline">{{ page.title }}</h1>
+    {%- if page.description %}
+    <p class="article__desc" itemprop="description">{{ page.description }}</p>
+    {%- endif %}
+  </header>
 
-    <div class="prose" itemprop="articleBody">{{ content }}</div>
+  <div class="article__body prose" itemprop="articleBody">
+    {{ content }}
+  </div>
 
-    <footer class="article__foot">
-      <a class="btn btn--secondary btn--sm" href="{{ '/posts/' | relative_url }}">← All posts</a>
-      <a class="btn btn--ghost btn--sm" href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-    </footer>
-  </article>
+  <footer class="article__foot">
+    <div>
+      <p class="article__foot-label">标签</p>
+      {%- if page.tags.size > 0 %}
+      <ul class="tag-list">
+        {%- for tag in page.tags %}
+        <li><a class="tag tag--link" href="{{ '/tags/' | relative_url }}#tag-{{ tag | slugify }}" rel="tag">{{ tag }}</a></li>
+        {%- endfor %}
+      </ul>
+      {%- else %}
+      <p class="article__foot-empty">没有标签</p>
+      {%- endif %}
+    </div>
+    <a class="btn" href="{{ '/posts/' | relative_url }}">全部文章</a>
+  </footer>
 
+  {%- assign date_key = page.date | date: '%Y-%m-%d' %}
+  {%- assign older_post = nil %}
+  {%- assign newer_post = nil %}
+  {%- for post in site.posts %}
+    {%- assign post_key = post.date | date: '%Y-%m-%d' %}
+    {%- if post_key < date_key and older_post == nil %}
+      {%- assign older_post = post %}
+    {%- endif %}
+    {%- if post_key > date_key %}
+      {%- assign newer_post = post %}
+    {%- endif %}
+  {%- endfor %}
   {%- if older_post or newer_post %}
-  <nav class="post-nav" aria-label="Post navigation">
+  <nav class="post-nav" aria-label="文章导航">
     {%- if older_post %}
-    <a class="card post-nav__item" href="{{ older_post.url | relative_url }}">
-      <span class="post-nav__label">← Older post</span>
+    <a class="post-nav__item" href="{{ older_post.url | relative_url }}">
+      <span class="post-nav__label">← 更早</span>
       <span class="post-nav__title">{{ older_post.title }}</span>
     </a>
     {%- endif %}
     {%- if newer_post %}
-    <a class="card post-nav__item post-nav__item--next" href="{{ newer_post.url | relative_url }}">
-      <span class="post-nav__label">Newer post →</span>
+    <a class="post-nav__item post-nav__item--next" href="{{ newer_post.url | relative_url }}">
+      <span class="post-nav__label">更新 →</span>
       <span class="post-nav__title">{{ newer_post.title }}</span>
     </a>
     {%- endif %}
   </nav>
   {%- endif %}
+</article>
 </div>

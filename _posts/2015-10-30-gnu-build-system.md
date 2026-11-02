@@ -1,7 +1,8 @@
 ---
 layout: post
-title: GNU Build System
-description: Walkthrough of the GNU Autotools flow from configure.ac to autoconf and automake.
+title: GNU 构建系统
+description: 英文笔记：从 configure.ac 到 autoconf/automake 的 GNU Autotools 流程。
+lang: en
 tags: [autotools, build-system]
 ---
 

@@ -1,26 +1,35 @@
 ---
 layout: page
-title: Posts
-description: Every post published on this site, archived by year.
-permalink: /posts/
+title: 文章
+description: Boush Li 的全部文章，按年份归档：编程语言、构建系统、编辑器与日常工具。
 ---
+<header class="page-head">
+  <p class="page-head__kicker">存档</p>
+  <h1 class="page-head__title">文章</h1>
+  <p class="page-head__desc">按年份浏览全部 {{ site.posts | size }} 篇文章。也可以去 <a href="{{ '/tags/' | relative_url }}">标签页</a> 按主题查找。</p>
+</header>
 
-{%- assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
-{%- for year in posts_by_year %}
-<section class="archive-year" aria-labelledby="year-{{ year.name }}">
-  <h2 class="archive-year__title" id="year-{{ year.name }}">
-    {{ year.name }}
-    <span class="section-count">{{ year.items | size }}</span>
-  </h2>
-  <ol class="archive-list">
-    {%- for post in year.items %}
-    <li class="archive-list__item">
-      <a href="{{ post.url | relative_url }}">
-        <span class="archive-list__title">{{ post.title }}</span>
-        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%b %-d' }}</time>
-      </a>
-    </li>
-    {%- endfor %}
-  </ol>
-</section>
-{%- endfor %}
+<div class="archive">
+  {%- assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {%- for group in posts_by_year %}
+  <section class="archive-year" aria-labelledby="year-{{ group.name }}">
+    <h2 class="archive-year__title" id="year-{{ group.name }}">
+      {{ group.name }}
+      <span class="archive-year__count">{{ group.items | size }} 篇</span>
+    </h2>
+    <ul class="archive-list">
+      {%- for post in group.items %}
+      {%- assign post_lang = post.lang | default: site.lang %}
+      <li class="archive-list__item" lang="{{ post_lang }}">
+        <a href="{{ post.url | relative_url }}">
+          <span class="archive-list__title">{{ post.title }}</span>
+          <time class="archive-list__date" datetime="{{ post.date | date_to_xmlschema }}">
+            {{ post.date | date: '%-m 月 %-d 日' }}
+          </time>
+        </a>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endfor %}
+</div>

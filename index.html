@@ -1,8 +1,9 @@
 ---
 layout: home
-description: Personal site and blog of Boush Li — notes on programming, tools and systems.
+seo_title: Boush Li · 代码、工具与系统
+description: >-
+  Boush Li 的个人主页与技术博客：记录编程语言、构建系统、编辑器，以及日常工作中反复使用的工具。中文为主，也保留英文笔记。
 ---
-
 {%- for post in site.posts %}
-{% include post-card.html post=post %}
+  {% include post-card.html post=post %}
 {%- endfor %}

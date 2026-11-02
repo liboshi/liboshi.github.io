@@ -1,22 +1,24 @@
 <header class="topbar">
   <div class="topbar__inner">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} — home">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} — 首页">
       <span class="brand__mark" aria-hidden="true">B</span>
       <span class="brand__name">{{ site.title }}</span>
     </a>
 
-    <nav class="topnav" id="site-nav" aria-label="Main navigation">
+    <nav class="topnav" id="site-nav" aria-label="主导航">
       {%- for item in site.data.navigation %}
       {%- assign is_active = false %}
       {%- if page.url == item.url %}{% assign is_active = true %}{% endif %}
       {%- if item.url == '/posts/' and page.collection == 'posts' %}{% assign is_active = true %}{% endif %}
+      {%- if item.url == '/tags/' and page.url == '/tags/' %}{% assign is_active = true %}{% endif %}
       <a class="topnav__link{% if is_active %} is-active{% endif %}"
          href="{{ item.url | relative_url }}"
          {%- if is_active %} aria-current="page"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
       <a class="topnav__link topnav__link--external"
          href="https://github.com/{{ site.author.github }}"
-         target="_blank" rel="noopener noreferrer">
+         target="_blank" rel="noopener noreferrer"
+         aria-label="GitHub（在新窗口打开）">
         GitHub
         <svg class="icon icon--xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M7 17 17 7M7 7h10v10"/>
@@ -25,7 +27,7 @@
     </nav>
 
     <div class="topbar__actions">
-      <button class="icon-btn" type="button" id="theme-toggle" aria-label="Switch to dark theme" aria-pressed="false">
+      <button class="icon-btn" type="button" id="theme-toggle" aria-label="切换到深色模式" aria-pressed="false">
         <svg class="icon icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
         </svg>
@@ -36,7 +38,7 @@
       </button>
 
       <button class="icon-btn menu-toggle" type="button" id="menu-toggle"
-              aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+              aria-label="打开导航" aria-expanded="false" aria-controls="site-nav">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
           <path d="M4 7h16M4 12h16M4 17h16"/>
         </svg>

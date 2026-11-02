@@ -2,6 +2,7 @@
 layout: post
 title: Vim 操作
 description: Vim 常用操作速查：模式切换、光标移动、文本编辑与查找替换。
+lang: zh-CN
 tags: [vim, editor]
 ---
 

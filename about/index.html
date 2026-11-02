@@ -1,28 +1,35 @@
 ---
 layout: page
-title: About
-description: About Boush Li — software engineer, notes on code, tools and systems.
+title: 关于
+description: 关于 Boush Li：软件工程师，记录编程语言、构建系统、编辑器与日常工具。
 ---
+<header class="page-head">
+  <p class="page-head__kicker">关于</p>
+  <h1 class="page-head__title">关于我</h1>
+  <p class="page-head__desc">写代码，也写下写代码时用到的工具。</p>
+</header>
 
-<div class="about-card">
-  <img class="about-card__avatar"
-       src="{{ site.author.avatar | relative_url }}"
-       alt="{{ site.author.name }}" width="96" height="96">
-  <div class="about-card__text">
-    <h2 class="about-card__name">{{ site.author.name }}</h2>
-    <p class="about-card__bio">{{ site.author.bio }}</p>
+<section class="card about-card" aria-labelledby="about-name">
+  <img class="avatar avatar--lg about-card__avatar"
+       src="{{ '/images/avatar-192.png' | relative_url }}"
+       srcset="{{ '/images/avatar-192.png' | relative_url }} 1x, {{ '/images/avatar-400.png' | relative_url }} 2x"
+       sizes="96px" width="96" height="96" alt="{{ site.author.name }}" decoding="async">
+  <div>
+    <h2 class="about-card__name" id="about-name">{{ site.author.name }}</h2>
+    <p class="about-card__role">{{ site.author.bio }}</p>
   </div>
+</section>
+
+<div class="about-body">
+  <p>我是 Boush Li，一名软件工程师。这里是我的个人笔记本：记录编程语言、构建系统、编辑器，以及日常工作中反复使用的工具。</p>
+  <p>文章以中文为主，也保留了一些英文笔记。内容大多来自实际使用中的笔记和踩坑记录，希望对你也有用。</p>
+  <p>这个站点没有评论、统计脚本和第三方追踪；文章用 Markdown 写作，由 Jekyll 生成静态页面。</p>
+
+  <h2>在这里找到我</h2>
+  <ul class="about-links">
+    <li><a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    <li><a href="{{ '/posts/' | relative_url }}">文章归档</a></li>
+    <li><a href="{{ '/tags/' | relative_url }}">按标签浏览</a></li>
+    <li><a href="{{ '/feed.xml' | relative_url }}">Atom 订阅</a></li>
+  </ul>
 </div>
-
-<p>This is Boush Li.</p>
-
-<p>
-  I use this site as a personal notebook: notes on programming languages, build
-  systems, editors and the tools I reach for every day.
-</p>
-
-<ul class="about-links">
-  <li><a href="https://github.com/{{ site.author.github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-  <li><a href="{{ '/posts/' | relative_url }}">Posts archive</a></li>
-  <li><a href="{{ '/feed.xml' | relative_url }}">Atom feed</a></li>
-</ul>

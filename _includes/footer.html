@@ -1,11 +1,11 @@
 <footer class="footer">
   <div class="footer__inner">
-    <a class="footer__brand" href="{{ '/' | relative_url }}">
+    <a class="footer__brand" href="{{ '/' | relative_url }}" aria-label="{{ site.title }} — 首页">
       <span class="brand__mark brand__mark--sm" aria-hidden="true">B</span>
       <span>{{ site.title }}</span>
     </a>
 
-    <nav class="footer__nav" aria-label="Footer navigation">
+    <nav class="footer__nav" aria-label="页脚导航">
       {%- for item in site.data.navigation %}
       <a href="{{ item.url | relative_url }}">{{ item.label }}</a>
       {%- endfor %}
@@ -16,9 +16,9 @@
     <p class="footer__note">
       © {{ site.time | date: '%Y' }} {{ site.author.name }}
       <span aria-hidden="true">·</span>
-      Built with Jekyll
+      使用 Jekyll 构建
       <span aria-hidden="true">·</span>
-      <a href="{{ '/feed.xml' | relative_url }}">Atom feed</a>
+      <a href="{{ '/feed.xml' | relative_url }}">Atom 订阅</a>
     </p>
   </div>
 </footer>

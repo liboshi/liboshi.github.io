@@ -2,14 +2,17 @@
 # 站点元信息
 # ---------------------------------------------------------------------------
 title: Boush Li
+tagline: 代码、工具与系统
 description: >-
-  Personal site and blog of Boush Li — notes on programming, tools and systems.
+  Boush Li 的个人主页与技术博客：记录编程语言、构建系统、编辑器，以及日常工作中反复使用的工具。
 author:
   name: Boush Li
   github: liboshi
-  bio: Software engineer · Notes on code, tools and systems
-  avatar: /images/liboshi_logo_red_icon.png
-lang: en
+  url: https://github.com/liboshi
+  bio: 软件工程师 · 记录代码、工具与系统
+  avatar: /images/avatar-400.png
+og_image: /images/og-cover.png
+lang: zh-CN
 url: https://liboshi.github.io
 baseurl: ""
 

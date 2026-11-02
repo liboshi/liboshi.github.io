@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Markdown Syntax
+title: Markdown 语法
 description: Markdown 语法参考：区块元素、行内元素与特殊字符处理。
+lang: zh-CN
 tags: [markdown, writing]
 ---
 

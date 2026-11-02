@@ -1,0 +1,41 @@
+---
+layout: page
+title: 标签
+description: 按标签浏览 Boush Li 的文章：编程语言、构建系统、编辑器与日常工具。
+---
+<header class="page-head">
+  <p class="page-head__kicker">索引</p>
+  <h1 class="page-head__title">标签</h1>
+  <p class="page-head__desc">共 {{ site.tags | size }} 个标签。点击标签可跳到对应分组。</p>
+</header>
+
+{%- assign sorted_tags = site.tags | sort %}
+{%- if sorted_tags.size == 0 %}
+<p class="empty-note">还没有标签。</p>
+{%- else %}
+<nav class="tag-index" aria-label="标签索引">
+  {%- for tag in sorted_tags %}
+  <a class="tag tag--link" href="#tag-{{ tag[0] | slugify }}">{{ tag[0] }} <span class="tag__count">{{ tag[1] | size }}</span></a>
+  {%- endfor %}
+</nav>
+
+<div class="tag-groups">
+  {%- for tag in sorted_tags %}
+  <section class="tag-group" aria-labelledby="tag-{{ tag[0] | slugify }}">
+    <h2 class="tag-group__title" id="tag-{{ tag[0] | slugify }}">
+      {{ tag[0] }}
+      <span class="tag-group__count">{{ tag[1] | size }} 篇</span>
+    </h2>
+    <ul class="tag-group__list">
+      {%- for post in tag[1] %}
+      {%- assign post_lang = post.lang | default: site.lang %}
+      <li lang="{{ post_lang }}">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y-%m-%d' }}</time>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endfor %}
+</div>
+{%- endif %}

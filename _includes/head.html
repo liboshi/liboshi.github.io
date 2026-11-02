@@ -1,62 +1,160 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#FFFFFF">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#18191A" media="(prefers-color-scheme: dark)">
 
-{%- assign meta_description = page.description | default: site.description -%}
-{%- if page.title -%}
+{%- assign meta_description = page.description | default: site.description | strip_newlines | strip -%}
+{%- if page.seo_title -%}
+  {%- assign document_title = page.seo_title -%}
+{%- elsif page.title -%}
   {%- assign document_title = page.title | append: ' · ' | append: site.title -%}
 {%- else -%}
-  {%- assign document_title = site.title -%}
+  {%- assign document_title = site.title | append: ' · ' | append: site.tagline -%}
 {%- endif -%}
+{%- assign canonical = page.url | absolute_url -%}
+{%- assign social_image = site.og_image | default: '/images/og-cover.png' | absolute_url -%}
+{%- assign social_image_alt = site.title | append: ' · ' | append: site.tagline -%}
 
-<title>{{ document_title }}</title>
-<meta name="description" content="{{ meta_description | strip_html | strip_newlines | escape }}">
-<meta name="author" content="{{ site.author.name }}">
-<link rel="canonical" href="{{ page.url | absolute_url }}">
-
-<!-- Open Graph / Twitter -->
-<meta property="og:site_name" content="{{ site.title }}">
-<meta property="og:title" content="{{ document_title }}">
-<meta property="og:description" content="{{ meta_description | strip_html | strip_newlines | escape }}">
-<meta property="og:url" content="{{ page.url | absolute_url }}">
-<meta property="og:image" content="{{ site.author.avatar | absolute_url }}">
-{%- if page.collection == 'posts' %}
-<meta property="og:type" content="article">
-<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
-{%- else %}
-<meta property="og:type" content="website">
+<title>{{ document_title | escape }}</title>
+<meta name="description" content="{{ meta_description | escape }}">
+{%- if page.noindex %}
+<meta name="robots" content="noindex, nofollow">
 {%- endif %}
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="{{ document_title }}">
-<meta name="twitter:description" content="{{ meta_description | strip_html | strip_newlines | escape }}">
+<link rel="canonical" href="{{ canonical }}">
+<link rel="icon" href="{{ '/images/favicon.png' | relative_url }}" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="{{ '/images/avatar-192.png' | relative_url }}">
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }} · Atom" href="{{ '/feed.xml' | relative_url }}">
 
-<!-- 主题初始化：在样式加载前恢复用户选择，避免闪烁 -->
+<meta property="og:type" content="{% if page.collection == 'posts' %}article{% else %}website{% endif %}">
+<meta property="og:site_name" content="{{ site.title | escape }}">
+<meta property="og:title" content="{{ document_title | escape }}">
+<meta property="og:description" content="{{ meta_description | escape }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ social_image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{{ social_image_alt | escape }}">
+{%- if page.collection == 'posts' %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+<meta property="article:author" content="{{ site.author.url }}">
+{%- for tag in page.tags %}
+<meta property="article:tag" content="{{ tag | escape }}">
+{%- endfor %}
+{%- endif %}
+<meta property="og:locale" content="{% if page.lang == 'en' %}en_US{% else %}zh_CN{% endif %}">
+<meta property="og:locale:alternate" content="{% if page.lang == 'en' %}zh_CN{% else %}en_US{% endif %}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ document_title | escape }}">
+<meta name="twitter:description" content="{{ meta_description | escape }}">
+<meta name="twitter:image" content="{{ social_image }}">
+<meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">
+
+{%- if page.url == '/' %}
+<link rel="preload" as="image" href="{{ '/images/avatar-192.png' | relative_url }}"
+      imagesrcset="{{ '/images/avatar-192.png' | relative_url }} 1x, {{ '/images/avatar-400.png' | relative_url }} 2x"
+      imagesizes="168px">
+{%- endif %}
+
 <script>
   (function () {
-    try {
-      var stored = localStorage.getItem('theme');
-      if (stored === 'light' || stored === 'dark') {
-        document.documentElement.setAttribute('data-theme', stored);
-      }
-    } catch (e) {}
+    var root = document.documentElement;
+    var stored = null;
+    try { stored = localStorage.getItem('theme'); } catch (e) {}
+    var isDark = stored ? stored === 'dark'
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    if (stored) { root.setAttribute('data-theme', stored); }
+    var metas = document.querySelectorAll('meta[name="theme-color"]');
+    for (var i = 0; i < metas.length; i += 1) {
+      metas[i].setAttribute('content', isDark ? '#18191A' : '#FFFFFF');
+      metas[i].removeAttribute('media');
+    }
   })();
 </script>
 
-<link rel="icon" type="image/png" href="{{ '/favicon.png' | relative_url }}">
-<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
-
-<link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
-<link rel="stylesheet" href="{{ '/css/syntax.css' | relative_url }}">
-
-{%- if page.collection == 'posts' %}
+{%- if page.url == '/' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": {{ site.url | append: '/#person' | jsonify }},
+      "name": {{ site.author.name | jsonify }},
+      "url": {{ site.url | jsonify }},
+      "image": {{ site.author.avatar | absolute_url | jsonify }},
+      "jobTitle": "软件工程师",
+      "sameAs": [{{ site.author.url | jsonify }}]
+    },
+    {
+      "@type": "WebSite",
+      "@id": {{ site.url | append: '/#website' | jsonify }},
+      "url": {{ site.url | jsonify }},
+      "name": {{ site.title | jsonify }},
+      "description": {{ site.description | strip_newlines | strip | jsonify }},
+      "inLanguage": "zh-CN",
+      "author": { "@id": {{ site.url | append: '/#person' | jsonify }} }
+    }
+  ]
+}
+</script>
+{%- elsif page.collection == 'posts' %}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": {{ page.title | jsonify }},
+  "description": {{ meta_description | jsonify }},
   "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
-  "author": { "@type": "Person", "name": {{ site.author.name | jsonify }} },
-  "url": {{ page.url | absolute_url | jsonify }}
+  "author": {
+    "@type": "Person",
+    "name": {{ site.author.name | jsonify }},
+    "url": {{ site.author.url | jsonify }}
+  },
+  "image": {{ social_image | jsonify }},
+  "url": {{ canonical | jsonify }},
+  "mainEntityOfPage": {{ canonical | jsonify }},
+  "inLanguage": {{ page.lang | default: site.lang | jsonify }},
+  "keywords": {{ page.tags | join: ', ' | jsonify }}
+}
+</script>
+{%- else %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": {{ document_title | jsonify }},
+  "description": {{ meta_description | jsonify }},
+  "url": {{ canonical | jsonify }},
+  "inLanguage": "zh-CN",
+  "isPartOf": { "@id": {{ site.url | append: '/#website' | jsonify }} }
 }
 </script>
 {%- endif %}
+
+<link rel="stylesheet" href="{{ '/css/main.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/css/syntax.css' | relative_url }}">
+<noscript>
+  <style>
+    @media (max-width: 760px) {
+      .topbar__inner { flex-wrap: wrap; height: auto; min-height: var(--topbar-h); padding-bottom: 8px; }
+      .topnav {
+        display: flex !important;
+        position: static;
+        order: 3;
+        width: 100%;
+        flex-wrap: wrap;
+        margin: 4px 0 0;
+        padding: 8px 0 0;
+        border: 0;
+        border-top: 1px solid var(--color-divider);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+      .menu-toggle,
+      #theme-toggle,
+      .feed__tools { display: none !important; }
+    }
+  </style>
+</noscript>
